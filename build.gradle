@@ -1,12 +1,43 @@
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
+ext.jerseyVersion = '1.18.3'
+
+sourceCompatibility = 1.8
 version = '1.0'
 
 repositories {
     mavenCentral()
 }
 
+configurations {
+    provided
+}
+sourceSets {
+    main { compileClasspath += configurations.provided }
+}
+
 dependencies {
+
+    compile 'javax:javaee-api:7.0'
+    provided 'org.glassfish.extras:glassfish-embedded-all:3.1.1'
+
+    compile 'javax.activation:activation:1.1.1'
+    compile 'javax.inject:javax.inject:1'
+
+    compile 'org.jboss.weld.se:weld-se:2.2.8.Final'
+    //javax: XML binding
+    compile 'javax.xml.bind:jaxb-api:2.2.12'
+
+    //RESTful web service: Jersey
+    compile 'com.sun.jersey:jersey-bundle:1.18.3'
+    compile 'com.sun.jersey:jersey-server:1.18.3'
+    compile 'com.sun.jersey:jersey-servlet:1.18.3'
+    compile 'com.sun.jersey:jersey-json:1.18.3'
+
+    //Jackson (mapping JSON lists for AngularJS)
+    compile 'org.codehaus.jackson:jackson-jaxrs:1.9.12'
+
+    compile 'javax.servlet:javax.servlet-api:3.0.1'
+
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }

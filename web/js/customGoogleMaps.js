@@ -56,7 +56,6 @@ function addInfoToMarker(marker, tagType, description, numVotes, numComments, nu
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.open(map, marker);
     });
-
 }
 
 var rectangle;
@@ -69,7 +68,6 @@ function initialize() {
     });
 
     drawingManager = new google.maps.drawing.DrawingManager({
-        drawingMode: google.maps.drawing.OverlayType.MARKER,
         drawingControl: false,
         drawingControlOptions: {
             position: google.maps.ControlPosition.TOP_RIGHT,
@@ -85,16 +83,12 @@ function initialize() {
     });
 
 
-
     google.maps.event.addListener(drawingManager, "overlaycomplete", function(event){
         if (rectangle != null)
         {
             rectangle.setMap(null);
         }
         rectangle = event.overlay;
-        //google.maps.event.addListener(rectangle, 'bounds_changed', showNewRect);
-        //google.maps.event.addListener(rectangle, 'dragend', showNewRect);
-
     });
 
 
@@ -115,28 +109,7 @@ function showNewRect(event) {
 }
 
 
-$(document).ready(function () {
-    $("#searchData").click(function () {
-        markerCluster.clearMarkers();
-        markers = [];
-        $.getJSON("http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/users", function (result) {
-            $.each(result, function (i, field) {
-                var marker = addMarker(field.latitude, field.longitude);
-                addInfoToMarker(marker, field.tagType, field.description, field.votesAmount, field.commentsAmount, field.viewsAmount);
-            });
-            markerCluster.addMarkers(markers);
-        });
-    });
 
-    $(function () {
-        $("#Tabs1").tabs();
-    });
-
-
-    $('input[id=lefile]').change(function () {
-        $('#photoCover').val($(this).val());
-    });
-});
 
 
 function areaTabClicked()

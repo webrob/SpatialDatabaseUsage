@@ -4,18 +4,15 @@
     <title>Styling the Base Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <link href="css/jquery/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
-    <link href="css/jquery/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
-    <link href="css/jquery/jquery.ui.tabs.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/app.css" rel="stylesheet" type="text/css">
+    <link href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
-    <script type="text/javascript"
-            src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>
-    <script src="js/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
-    <script src="js/jquery/jquery-ui-1.9.2.tabs.custom.min.js" type="text/javascript"></script>
+    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>
     <script src="js/bootstrap/bootstrap.js"></script>
     <script src="js/spatialDatabase.js"></script>
     <script src="js/spatialMarkerManager.js"></script>
@@ -41,9 +38,10 @@
                     <input type="checkbox" name="source">
                     Source
                 </label>
+
             </div>
             <div>
-                <select name="sourceSelect">
+                <select id="sourceSelect">
                     <option>Android</option>
                 </select>
             </div>
@@ -55,66 +53,95 @@
                 </label>
             </div>
             <div>
-                <select name="tagSelect">
+                <select name="tagSelect" id="tagSelect">
                     <option>graffiti</option>
                 </select>
             </div>
 
 
             <div>
-                <input id="lefile" type="file" style="display:none">
+                <label>
+                    <input type="checkbox" name="createdTime">
+                    Created time
+                </label>
 
-                <div class="input-append">
-                    <input id="photoCover" class="input-large" type="text">
-                    <a class="btn" onclick="$('input[id=lefile]').click();">Browse</a>
-                </div>
-
-                <script type="text/javascript">
-
-                </script>
-
+            </div>
+            <div>
+                <span>
+                <label>
+                    <input class="short" type="text" name="sighting_date" id="minCreatedTime"/>
+                </label>
+                -
+                <label>
+                    <input class="short" type="text" name="sighting_date" id="maxCreatedTime"/>
+                </label>
+                </span>
             </div>
 
 
             <div>
+                <label>
+                    <input type="checkbox" name="source">
+                    Number of votes
+                </label>
+            </div>
+            <div class="wrapper">
 
-
-                <div class="control-group">
-                    <label class="control-label">Append</label>
-
-                    <div class="controls">
-                        <div class="input-append input-block-level">
-                            <input type="text">
-                            <span class="add-on"><i class="icon-calendar"></i></span>
-                        </div>
-                    </div>
+                <div class="first" id="minVotesNumLabel">
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Prepend</label>
-
-                    <div class="controls">
-                        <div class="input-prepend input-block-level">
-                            <span class="add-on"><i class="icon-calendar"></i></span>
-                            <input type="text">
-                        </div>
-                    </div>
+                <div class="second" id="maxVotesNumLabel">
                 </div>
+            </div>
+            <div class="wrapper">
 
-                <div class="control-group">
-                    <label class="control-label">Prepend / Append</label>
+                <div class="first" id="minVotesNumSlider"></div>
+                <div class="second" id="maxVotesNumSlider"></div>
+            </div>
 
-                    <div class="controls">
-                        <div class="input-prepend input-append input-block-level">
-                            <span class="add-on"><i class="icon-calendar"></i></span>
-                            <input type="text">
-                            <span class="add-on"><i class="icon-calendar"></i></span>
-                        </div>
-                    </div>
-                </div>
-
+            <div>
+                <label>
+                    <input type="checkbox" name="source">
+                    Number of comments
+                </label>
 
             </div>
+            <div class="wrapper">
+
+                <div class="first" id="minCommentsNumLabel">
+                </div>
+
+                <div class="second" id="maxCommentsNumLabel">
+                </div>
+            </div>
+            <div class="wrapper">
+
+                <div class="first" id="minCommentsNumSlider"></div>
+                <div class="second" id="maxCommentsNumSlider"></div>
+            </div>
+
+
+            <div>
+                <label>
+                    <input type="checkbox" name="source">
+                    Number of views
+                </label>
+
+            </div>
+            <div class="wrapper">
+
+                <div class="first" id="minViewsNumLabel">
+                </div>
+
+                <div class="second" id="maxViewsNumLabel">
+                </div>
+            </div>
+            <div class="wrapper">
+
+                <div class="first" id="minViewsNumSlider"></div>
+                <div class="second" id="maxViewsNumSlider"></div>
+            </div>
+
 
         </div>
         <div id="tabs-2">

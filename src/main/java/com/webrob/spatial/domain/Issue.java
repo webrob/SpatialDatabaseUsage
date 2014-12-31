@@ -50,7 +50,6 @@ public class Issue
         this.longitude = yyy;
     }
 
-
     private String summary;
     private String description;
     private int votesAmount;
@@ -58,10 +57,7 @@ public class Issue
     private int viewsAmount;
     private String source;
     private String createdTime;
-
     private String tagType;
-
-
 
 
     public String getSummary()

@@ -8,26 +8,26 @@ import java.io.IOException;
  * Created by Robert on 2014-12-27.
  */
 
-public class JSONwrapper
+public class JSONParametersWrapper
 {
-    private Test o;
+    private IssueSearchParameters searchParameters;
 
-    public JSONwrapper()
+    public JSONParametersWrapper()
     {
     }
 
     /**
      * Deserializes an Object of class MyClass from its JSON representation
      */
-    public JSONwrapper(String json)
+    public JSONParametersWrapper(String json)
     {
 	if (json != null)
 	{
 	    ObjectMapper mapper = new ObjectMapper(); //Jackson's JSON marshaller
-	    o = null;
+	    searchParameters = null;
 	    try
 	    {
-		o = mapper.readValue(json, Test.class);
+		searchParameters = mapper.readValue(json, IssueSearchParameters.class);
 	    }
 	    catch (IOException e)
 	    {
@@ -36,8 +36,8 @@ public class JSONwrapper
 	}
     }
 
-    public Test getO()
+    public IssueSearchParameters getIssueSearchParameters()
     {
-	return o;
+	return searchParameters;
     }
 }

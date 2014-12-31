@@ -3,7 +3,7 @@ package com.webrob.spatial.domain;
 /**
  * Created by Robert on 2014-12-31.
  */
-public class IssueSearchParameters
+public class SearchIssueParameters
 {
     public String getTagType()
     {

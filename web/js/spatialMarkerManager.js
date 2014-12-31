@@ -131,5 +131,15 @@ function SpatialMarkerManager() {
     this.initMarkerCluster = function () {
         this.markerCluster = new MarkerClusterer(this.map);
     };
+
+    this.getRectangleBounds = function(){
+        var bounds = null;
+        if (this.rectangle != null)
+        {
+            bounds = this.rectangle.getBounds();
+        }
+        return bounds;
+    }
+
 }
 

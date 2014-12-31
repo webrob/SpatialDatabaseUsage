@@ -1,7 +1,7 @@
 package com.webrob.spatial.repositories;
 
 import com.webrob.spatial.domain.Issue;
-import com.webrob.spatial.domain.IssueSearchParameters;
+import com.webrob.spatial.domain.SearchIssueParameters;
 
 import javax.ejb.Stateless;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class IssueRepositoryImpl extends IssueRepository
 		    + "i.num_comments, i.num_views, i.source, i.created_time, i.tag_type FROM issue i WHERE i.num_comments > ?1";
 
     @Override
-    public List<Issue> queryIssues(IssueSearchParameters issueSearchParameters) throws SQLException
+    public List<Issue> queryIssues(SearchIssueParameters searchIssueParameters) throws SQLException
     {
 	List<Issue> issues = new ArrayList<>();
 	try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery))

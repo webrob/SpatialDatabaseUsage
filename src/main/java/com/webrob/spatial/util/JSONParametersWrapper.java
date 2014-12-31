@@ -1,5 +1,6 @@
-package com.webrob.spatial.domain;
+package com.webrob.spatial.util;
 
+import com.webrob.spatial.domain.SearchIssueParameters;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 public class JSONParametersWrapper
 {
-    private IssueSearchParameters searchParameters;
+    private SearchIssueParameters searchParameters;
 
     public JSONParametersWrapper()
     {
@@ -27,7 +28,7 @@ public class JSONParametersWrapper
 	    searchParameters = null;
 	    try
 	    {
-		searchParameters = mapper.readValue(json, IssueSearchParameters.class);
+		searchParameters = mapper.readValue(json, SearchIssueParameters.class);
 	    }
 	    catch (IOException e)
 	    {
@@ -36,7 +37,7 @@ public class JSONParametersWrapper
 	}
     }
 
-    public IssueSearchParameters getIssueSearchParameters()
+    public SearchIssueParameters getIssueSearchParameters()
     {
 	return searchParameters;
     }

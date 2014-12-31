@@ -1,7 +1,7 @@
 package com.webrob.spatial.repositories;
 
 import com.webrob.spatial.domain.Issue;
-import com.webrob.spatial.domain.IssueSearchParameters;
+import com.webrob.spatial.domain.SearchIssueParameters;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,19 +11,19 @@ import java.util.List;
  */
 public abstract class IssueRepository extends ConnectionManager<Issue>
 {
-    private IssueSearchParameters issueSearchParameters;
+    private SearchIssueParameters searchIssueParameters;
 
-    public List<Issue> getAllIssues(IssueSearchParameters issueSearchParameters)
+    public List<Issue> getAllIssues(SearchIssueParameters searchIssueParameters)
     {
-        this.issueSearchParameters = issueSearchParameters;
+        this.searchIssueParameters = searchIssueParameters;
         return doAllTransaction();
     }
 
     @Override
     protected List<Issue> doQuery() throws SQLException
     {
-        return queryIssues(issueSearchParameters);
+        return queryIssues(searchIssueParameters);
     }
 
-    protected abstract List<Issue> queryIssues(IssueSearchParameters issueSearchParameters) throws SQLException;
+    protected abstract List<Issue> queryIssues(SearchIssueParameters searchIssueParameters) throws SQLException;
 }

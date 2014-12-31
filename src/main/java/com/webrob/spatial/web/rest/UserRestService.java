@@ -1,8 +1,12 @@
 package com.webrob.spatial.web.rest;
 
+import com.webrob.spatial.domain.AreaStatistics;
 import com.webrob.spatial.domain.Issue;
-import com.webrob.spatial.domain.IssueSearchParameters;
-import com.webrob.spatial.domain.JSONParametersWrapper;
+import com.webrob.spatial.domain.SearchAreaStatistics;
+import com.webrob.spatial.domain.SearchIssueParameters;
+import com.webrob.spatial.repositories.AreaRepository;
+import com.webrob.spatial.util.JSONAreaStatisticsWrapper;
+import com.webrob.spatial.util.JSONParametersWrapper;
 import com.webrob.spatial.repositories.IssueRepository;
 
 import javax.ejb.Stateless;
@@ -22,25 +26,30 @@ public class UserRestService
     @Inject
     private IssueRepository issueRepository;
 
-
-    @GET
-    @Path("numberOfUsers")
-    @Produces(MediaType.APPLICATION_JSON)
-    public int getNumberOfUsers()
-    {
-	return 0;
-    }
+    @Inject
+    private AreaRepository areaRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Issue> getAllUsersInJSON(@QueryParam("parameters")JSONParametersWrapper jSONParametersWrapper) throws SQLException
+    public List<Issue> getAllIssues(@QueryParam("parameters")JSONParametersWrapper jsonParametersWrapper) throws SQLException
     {
-        IssueSearchParameters issueSearchParameters = jSONParametersWrapper.getIssueSearchParameters();
+        SearchIssueParameters searchIssueParameters = jsonParametersWrapper.getIssueSearchParameters();
 
-        List<Issue> allIssues = issueRepository.getAllIssues(issueSearchParameters);
+        List<Issue> allIssues = issueRepository.getAllIssues(searchIssueParameters);
         return allIssues;
     }
 
+
+    @GET
+    @Path("area")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AreaStatistics> getAreaStatistics(@QueryParam("parameters")JSONAreaStatisticsWrapper jsonAreaStatisticsWrapper) throws SQLException
+    {
+        SearchAreaStatistics searchAreaStatistics = jsonAreaStatisticsWrapper.getSearchAreaStatistics();
+        List<AreaStatistics> areaStatistics = areaRepository.getAreaStatistics(searchAreaStatistics);
+
+        return areaStatistics;
+    }
 
 
 }

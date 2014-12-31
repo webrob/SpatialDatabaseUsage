@@ -14,6 +14,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>
     <script src="js/bootstrap/bootstrap.js"></script>
+    <script src="js/UIHelper.js"></script>
+    <script src="js/JSONParametersConverter.js"></script>
+    <script src="js/JSONAreaConverter.js"></script>
     <script src="js/spatialDatabase.js"></script>
     <script src="js/spatialMarkerManager.js"></script>
     <script src="js/customGoogleMaps.js"></script>
@@ -26,7 +29,7 @@
 
     <div id="myDiv"></div>
 
-    <div id="Tabs1">
+    <div id="tabsMenu">
         <ul>
             <li><a href="#tabs-1" onclick="nonAreaTabClicked()">Tab 1</a></li>
             <li><a href="#tabs-2" onclick="areaTabClicked()">Tab 2</a></li>
@@ -153,7 +156,7 @@
     </div>
 
     <span class="controls">
-        <a id="searchData" class="btn btn-large btn-primary">Search</a>
+        <a id="searchData" onclick="searchClicked()" class="btn btn-large btn-primary">Search</a>
     </span>
     <span class="controls">
         <a class="btn btn-large btn-primary">Clear</a>

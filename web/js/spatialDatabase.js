@@ -5,14 +5,12 @@
 
 $(document).ready(function () {
     $("#searchData").click(function () {
-        markerCluster.clearMarkers();
-        markers = [];
+        spatialMarkerManager.clearMarkersFromMapAndMemory();
         $.getJSON("http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/users", function (result) {
             $.each(result, function (i, field) {
-                var marker = addMarker(field.latitude, field.longitude);
-                addInfoToMarker(marker, field.tagType, field.description, field.votesAmount, field.commentsAmount, field.viewsAmount);
+            spatialMarkerManager.addMarkerWithInfo(field);
             });
-            markerCluster.addMarkers(markers);
+            spatialMarkerManager.addMarkersToMap();
         });
     });
 
@@ -25,3 +23,11 @@ $(document).ready(function () {
         $('#photoCover').val($(this).val());
     });
 });
+
+function areaTabClicked() {
+    spatialMarkerManager.showDrawingManger();
+}
+
+function nonAreaTabClicked() {
+    spatialMarkerManager.hideDrawingManager();
+}

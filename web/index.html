@@ -13,6 +13,7 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>
+    <script src="js/oms.min.js"></script>
     <script src="js/bootstrap/bootstrap.js"></script>
     <script src="js/UIHelper.js"></script>
     <script src="js/JSONParametersConverter.js"></script>
@@ -27,18 +28,25 @@
 
 <div id="legend"><h3>Control panel</h3>
 
-    <div id="myDiv"></div>
+    <div id="myDiv">
+        <select id="citySelect">
+            <option>Chicago</option>
+            <option>Oakland</option>
+            <option>New Haven</option>
+            <option>Richmond</option>
+        </select>
+    </div>
 
     <div id="tabsMenu">
         <ul>
-            <li><a href="#tabs-1" onclick="nonAreaTabClicked()">Tab 1</a></li>
-            <li><a href="#tabs-2" onclick="areaTabClicked()">Tab 2</a></li>
+            <li><a href="#tabs-1" onclick="nonAreaTabClicked()">parameters</a></li>
+            <li><a href="#tabs-2" onclick="areaTabClicked()">area statistics</a></li>
             <li><a href="#tabs-3" onclick="nonAreaTabClicked()">Tab 3</a></li>
         </ul>
         <div id="tabs-1">
             <div>
                 <label>
-                    <input type="checkbox" name="source">
+                    <input type="checkbox" id="sourceCheckbox">
                     Source
                 </label>
 
@@ -51,7 +59,7 @@
 
             <div>
                 <label>
-                    <input type="checkbox" name="tag">
+                    <input type="checkbox" id="tagCheckbox">
                     Tag
                 </label>
             </div>
@@ -64,7 +72,7 @@
 
             <div>
                 <label>
-                    <input type="checkbox" name="createdTime">
+                    <input type="checkbox" id="createdTimeCheckbox">
                     Created time
                 </label>
 
@@ -84,7 +92,7 @@
 
             <div>
                 <label>
-                    <input type="checkbox" name="source">
+                    <input type="checkbox" id="votesNumCheckbox">
                     Number of votes
                 </label>
             </div>
@@ -104,7 +112,7 @@
 
             <div>
                 <label>
-                    <input type="checkbox" name="source">
+                    <input type="checkbox" id="commentsNumCheckbox">
                     Number of comments
                 </label>
 
@@ -126,7 +134,7 @@
 
             <div>
                 <label>
-                    <input type="checkbox" name="source">
+                    <input type="checkbox" id="viewsNumCheckbox">
                     Number of views
                 </label>
 

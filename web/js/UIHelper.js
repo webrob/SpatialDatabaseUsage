@@ -2,8 +2,7 @@
  * Created by Robert on 2014-12-31.
  */
 
-function UIHelper()
-{
+function UIHelper() {
     this.getTextFromSelect = function (selectedSelect) {
         var selectedIndex = selectedSelect.selectedIndex;
         return selectedSelect.options[selectedIndex].text;
@@ -16,5 +15,9 @@ function UIHelper()
     this.getValueFromDatePicker = function (datePicker) {
         return datePicker.val();
     };
+
+    this.getValueFromCheckbox = function (checkbox) {
+        return checkbox.prop("checked") ? 1 : 0;
+    }
 }
 

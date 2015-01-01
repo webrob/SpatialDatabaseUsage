@@ -1,11 +1,15 @@
 package com.webrob.spatial.domain;
 
+import com.webrob.spatial.util.DateAdapter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Robert on 2014-12-29.
@@ -56,8 +60,9 @@ public class Issue
     private int commentsAmount;
     private int viewsAmount;
     private String source;
-    private String createdTime;
     private String tagType;
+
+    private String createdTime;
 
 
     public String getSummary()
@@ -111,15 +116,6 @@ public class Issue
     }
 
 
-    public String getCreatedTime()
-    {
-	return createdTime;
-    }
-
-    public void setCreatedTime(String createdTime)
-    {
-	this.createdTime = createdTime;
-    }
 
 
     public String getTagType()
@@ -140,5 +136,16 @@ public class Issue
     public void setViewsAmount(int viewsAmount)
     {
         this.viewsAmount = viewsAmount;
+    }
+
+
+    public String getCreatedTime()
+    {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime)
+    {
+        this.createdTime = createdTime;
     }
 }

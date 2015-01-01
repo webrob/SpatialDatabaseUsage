@@ -4,6 +4,7 @@ import com.webrob.spatial.domain.Issue;
 import com.webrob.spatial.domain.SearchIssueParameters;
 
 import javax.ejb.Stateless;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,15 +18,87 @@ import java.util.List;
 public class IssueRepositoryImpl extends IssueRepository
 {
     String selectQuery = "SELECT i.id, X(i.xy) latitude, Y(i.xy) longitude, i.summary, i.description, i.num_votes,"
-		    + "i.num_comments, i.num_views, i.source, i.created_time, i.tag_type FROM issue i WHERE i.num_comments > ?1";
+		    + "i.num_comments, i.num_views, i.source, i.created_time, i.tag_type FROM issue i WHERE i.city = ?";
+
+
+    private String prepareSelectQuery(SearchIssueParameters parameters)
+    {
+	StringBuilder query = new StringBuilder(selectQuery);
+
+	if (parameters.isSourceSelected())
+	{
+	    query.append(" AND i.source = ?");
+	}
+	if (parameters.isTagTypeSelected())
+	{
+	    query.append(" AND i.tag_type = ?");
+	}
+	if (parameters.isVoteAmountSelected())
+	{
+	    query.append(" AND i.num_votes >= ?");
+	    query.append(" AND i.num_votes <= ?");
+	}
+	if (parameters.isViewsAmountSelected())
+	{
+	    query.append(" AND i.num_views >= ?");
+	    query.append(" AND i.num_views <= ?");
+	}
+	if (parameters.isCommentsAmountSelected())
+	{
+	    query.append(" AND i.num_comments >= ?");
+	    query.append(" AND i.num_comments <= ?");
+	}
+	if (parameters.isCreatedTimeSelected())
+	{
+
+	}
+
+	return query.toString();
+    }
+
+    private void setPrepareStatementParameters(PreparedStatement preparedStatement, SearchIssueParameters parameters)
+		    throws SQLException
+    {
+	int index = 0; // 1
+	preparedStatement.setInt(++index, 1); // city
+	if (parameters.isSourceSelected())
+	{
+	    preparedStatement.setString(++index,parameters.getSource());
+	}
+	if (parameters.isTagTypeSelected())
+	{
+	    preparedStatement.setString(++index,parameters.getTagType());
+	}
+	if (parameters.isVoteAmountSelected())
+	{
+	    preparedStatement.setInt(++index, parameters.getMinVotesAmount());
+	    preparedStatement.setInt(++index, parameters.getMaxVotesAmount());
+	}
+	if (parameters.isViewsAmountSelected())
+	{
+	    preparedStatement.setInt(++index, parameters.getMinViewsAmount());
+	    preparedStatement.setInt(++index, parameters.getMaxViewsAmount());
+	}
+	if (parameters.isCommentsAmountSelected())
+	{
+	    preparedStatement.setInt(++index, parameters.getMinCommentsAmount());
+	    preparedStatement.setInt(++index, parameters.getMaxCommentsAmount());
+	}
+	if (parameters.isCreatedTimeSelected())
+	{
+
+	}
+
+    }
 
     @Override
     public List<Issue> queryIssues(SearchIssueParameters searchIssueParameters) throws SQLException
     {
 	List<Issue> issues = new ArrayList<>();
-	try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery))
+	String query = prepareSelectQuery(searchIssueParameters);
+	try (PreparedStatement preparedStatement = connection.prepareStatement(query))
 	{
-	    preparedStatement.setInt(1, 0);
+	    setPrepareStatementParameters(preparedStatement, searchIssueParameters);
 	    try (ResultSet resultSet = preparedStatement.executeQuery())
 	    {
 		while (resultSet.next())
@@ -55,6 +128,9 @@ public class IssueRepositoryImpl extends IssueRepository
 
 		    String description = resultSet.getString("description");
 		    issue.setDescription(description);
+
+		    String createdTime = resultSet.getString("created_time");
+		    issue.setCreatedTime(createdTime);
 
 		    issues.add(issue);
 		}

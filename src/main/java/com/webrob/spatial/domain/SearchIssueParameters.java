@@ -105,6 +105,75 @@ public class SearchIssueParameters
 	this.maxCreatedTime = maxCreatedTime;
     }
 
+    private boolean voteAmountSelected;
+    private boolean commentsAmountSelected;
+    private boolean viewsAmountSelected;
+    private boolean createdTimeSelected;
+    private boolean sourceSelected;
+    private boolean tagTypeSelected;
+
+    public boolean isTagTypeSelected()
+    {
+        return tagTypeSelected;
+    }
+
+    public void setTagTypeSelected(boolean isTagTypeSelected)
+    {
+        this.tagTypeSelected = isTagTypeSelected;
+    }
+
+    public boolean isSourceSelected()
+    {
+        return sourceSelected;
+    }
+
+    public void setSourceSelected(boolean isSourceSelected)
+    {
+        this.sourceSelected = isSourceSelected;
+    }
+
+    public boolean isCreatedTimeSelected()
+    {
+        return createdTimeSelected;
+    }
+
+    public void setCreatedTimeSelected(boolean isCreatedTimeSelected)
+    {
+        this.createdTimeSelected = isCreatedTimeSelected;
+    }
+
+    public boolean isViewsAmountSelected()
+    {
+        return viewsAmountSelected;
+    }
+
+    public void setViewsAmountSelected(boolean isViewsAmountSelected)
+    {
+        this.viewsAmountSelected = isViewsAmountSelected;
+    }
+
+    public boolean isCommentsAmountSelected()
+    {
+        return commentsAmountSelected;
+    }
+
+    public void setCommentsAmountSelected(boolean isCommentsAmountSelected)
+    {
+        this.commentsAmountSelected = isCommentsAmountSelected;
+    }
+
+    public boolean isVoteAmountSelected()
+    {
+        return voteAmountSelected;
+    }
+
+    public void setVoteAmountSelected(boolean isVoteAmountSelected)
+    {
+        this.voteAmountSelected = isVoteAmountSelected;
+    }
+
+
+
     private int minVotesAmount;
     private int minCommentsAmount;
     private int minViewsAmount;
@@ -117,4 +186,17 @@ public class SearchIssueParameters
     private String minCreatedTime;
     private String maxCreatedTime;
     private String tagType;
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+
+    private String city;
+
 }

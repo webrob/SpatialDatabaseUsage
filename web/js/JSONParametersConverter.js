@@ -2,8 +2,17 @@
  * Created by Robert on 2014-12-31.
  */
 function JSONParametersConverter() {
+
+    this.sourceSelected = null;
+    this.tagTypeSelected = null;
+    this.createdTimeSelected = null;
+    this.voteAmountSelected = null;
+    this.commentsAmountSelected = null;
+    this.viewsAmountSelected = null;
+
     this.source = null;
     this.tagType = null;
+    this.city = null;
 
     this.minVotesAmount = null;
     this.minCommentsAmount = null;
@@ -17,22 +26,31 @@ function JSONParametersConverter() {
 }
 
 JSONParametersConverter.prototype.getJSON = function () {
-    var UIhelper = new UIHelper();
+    var uiHelper = new UIHelper();
 
-    this.source = UIhelper.getTextFromSelect($("#sourceSelect")[0]);
-    this.tagType = UIhelper.getTextFromSelect($("#tagSelect")[0]);
+    this.sourceSelected = uiHelper.getValueFromCheckbox($("#sourceCheckbox"));
+    this.tagTypeSelected = uiHelper.getValueFromCheckbox($("#tagCheckbox"));
+    this.createdTimeSelected = uiHelper.getValueFromCheckbox($("#createdTimeCheckbox"));
+    this.voteAmountSelected = uiHelper.getValueFromCheckbox($("#votesNumCheckbox"));
+    this.viewsAmountSelected = uiHelper.getValueFromCheckbox($("#viewsNumCheckbox"));
+    this.commentsAmountSelected = uiHelper.getValueFromCheckbox($("#commentsNumCheckbox"));
 
-    this.minVotesAmount = UIhelper.getValueFromSlider($("#minVotesNumSlider"));
-    this.maxVotesAmount = UIhelper.getValueFromSlider($("#maxVotesNumSlider"));
 
-    this.minViewsAmount = UIhelper.getValueFromSlider($("#minViewsNumSlider"));
-    this.maxViewsAmount = UIhelper.getValueFromSlider($("#maxViewsNumSlider"));
+    this.source = uiHelper.getTextFromSelect($("#sourceSelect")[0]);
+    this.tagType = uiHelper.getTextFromSelect($("#tagSelect")[0]);
+    this.city = uiHelper.getTextFromSelect($("#citySelect")[0]);
 
-    this.minCommentsAmount = UIhelper.getValueFromSlider($("#minCommentsNumSlider"));
-    this.maxCommentsAmount = UIhelper.getValueFromSlider($("#maxCommentsNumSlider"));
+    this.minVotesAmount = uiHelper.getValueFromSlider($("#minVotesNumSlider"));
+    this.maxVotesAmount = uiHelper.getValueFromSlider($("#maxVotesNumSlider"));
 
-    this.minCreatedTime = UIhelper.getValueFromDatePicker($("#minCreatedTime"));
-    this.maxCreatedTime = UIhelper.getValueFromDatePicker($("#maxCreatedTime"));
+    this.minViewsAmount = uiHelper.getValueFromSlider($("#minViewsNumSlider"));
+    this.maxViewsAmount = uiHelper.getValueFromSlider($("#maxViewsNumSlider"));
+
+    this.minCommentsAmount = uiHelper.getValueFromSlider($("#minCommentsNumSlider"));
+    this.maxCommentsAmount = uiHelper.getValueFromSlider($("#maxCommentsNumSlider"));
+
+    this.minCreatedTime = uiHelper.getValueFromDatePicker($("#minCreatedTime"));
+    this.maxCreatedTime = uiHelper.getValueFromDatePicker($("#maxCreatedTime"));
 
     return JSON.stringify(this);
 };

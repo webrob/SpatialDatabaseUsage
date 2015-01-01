@@ -86,7 +86,7 @@ function initSlider(slider, label) {
         value: 0,
         min: 0,
         max: 150,
-        step: 3,
+        step: 1,
         slide: function (event, ui) {
             label.html(ui.value);
         }

@@ -4,12 +4,15 @@
 
 
 function SpatialMarkerManager() {
+    this.gm = google.maps;
     this.chicago = new google.maps.LatLng(41.850033, -87.6500523);
     this.map = null;
     this.markerCluster = null;
     this.markers = [];
     this.drawingManager = null;
     this.rectangle = null;
+    this.infoWindow = new this.gm.InfoWindow({maxWidth: 250});
+    this.oms = null;
     this.contentString =
         '<div id="content">' +
         '<div id="siteNotice">' +
@@ -30,6 +33,7 @@ function SpatialMarkerManager() {
         '<td>{4}</td> ' +
         '</tr> ' +
         '</table>' +
+        '<p><b>created time: </b> {5}</p>' +
         '</div>' +
         '</div>';
 
@@ -48,6 +52,20 @@ function SpatialMarkerManager() {
             center: this.chicago,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
+
+        this.oms = new OverlappingMarkerSpiderfier(this.map,
+            {markersWontMove: true, markersWontHide: true});
+
+        var _this = this;
+        this.oms.addListener('click', function(marker) {
+            _this.infoWindow.setContent(marker.desc);
+            _this.infoWindow.open(_this.map, marker);
+        });
+
+        this.oms.addListener('spiderfy', function(markers) {
+            _this.infoWindow.close();
+        });
+
     };
 
     this.hideDrawingManager = function () {
@@ -78,7 +96,9 @@ function SpatialMarkerManager() {
 
     this.addMarkerWithInfo = function (issue) {
         var marker = this.addMarker(issue.latitude, issue.longitude);
-        this.addInfoToMarker(marker, issue.tagType, issue.description, issue.votesAmount, issue.commentsAmount, issue.viewsAmount);
+        marker.desc =  this.contentString.format(issue.tagType, issue.description, issue.votesAmount, issue.commentsAmount, issue.viewsAmount, issue.createdTime);
+        this.oms.addMarker(marker);
+        //this.addInfoToMarker(marker, issue.tagType, issue.description, issue.votesAmount, issue.commentsAmount, issue.viewsAmount);
     };
 
     this.addMarker = function (lat, lng) {
@@ -91,12 +111,13 @@ function SpatialMarkerManager() {
     };
 
     this.addInfoToMarker = function (marker, tagType, description, numVotes, numComments, numViews) {
-        var infoWindow = new google.maps.InfoWindow({
+        infoWindow = new google.maps.InfoWindow({
             content: this.contentString.format(tagType, description, numVotes, numComments, numViews),
             maxWidth: 200
         });
+        var _this = this;
         google.maps.event.addListener(marker, 'click', function () {
-            infoWindow.open(SpatialMarkerManager.map, marker);
+            infoWindow.open(_this.map, marker);
         });
 
     };
@@ -129,7 +150,7 @@ function SpatialMarkerManager() {
     };
 
     this.initMarkerCluster = function () {
-        this.markerCluster = new MarkerClusterer(this.map);
+        this.markerCluster = new MarkerClusterer(this.map, [], {maxZoom: 19});
     };
 
     this.getRectangleBounds = function(){

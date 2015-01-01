@@ -8,10 +8,10 @@ import java.util.Date;
 /**
  * Created by Robert on 2014-12-29.
  */
-public class DateAdapter //extends XmlAdapter<String, Date>
+public class DateAdapter extends XmlAdapter<String, Date>
 {
     // the desired format
-    private static String pattern = "dd-MM-yyyy";
+    private static String pattern = "dd-MM-yyyy ss:mm:HH";
 
     public String marshal(Date date) throws Exception
     {
@@ -23,18 +23,18 @@ public class DateAdapter //extends XmlAdapter<String, Date>
 	return new SimpleDateFormat(pattern).parse(dateString);
     }
 
-    public static String newFormatDate(String date)
+    public static Date getDateFromString(String dateString)
     {
-	Date parse = null;
+	Date date = null;
 	try
 	{
-	    parse =new SimpleDateFormat(pattern).parse(date);
+	    date = new SimpleDateFormat(pattern).parse(dateString);
 	}
 	catch (ParseException e)
 	{
 	    e.printStackTrace();
 	}
-	return parse != null ? parse.toString() : "";
+	return date;
     }
 
 }

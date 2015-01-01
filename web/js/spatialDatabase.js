@@ -3,25 +3,24 @@
  */
 
 
+
 $(document).ready(function () {
+    getInitData();
+
     $("#tabsMenu").tabs();
-    initSlider($("#minVotesNumSlider"), $("#minVotesNumLabel"));
-    initSlider($("#maxVotesNumSlider"), $("#maxVotesNumLabel"));
 
-    initSlider($("#minViewsNumSlider"), $("#minViewsNumLabel"));
-    initSlider($("#maxViewsNumSlider"), $("#maxViewsNumLabel"));
-
-    initSlider($("#minCommentsNumSlider"), $("#minCommentsNumLabel"));
-    initSlider($("#maxCommentsNumSlider"), $("#maxCommentsNumLabel"));
-
-    var minCreatedTime = $("#minCreatedTime");
-    minCreatedTime.datepicker({changeMonth: true, changeYear: true});
-    minCreatedTime.datepicker("setDate", "7/11/2011");
-
-    var maxCreatedTime = $("#maxCreatedTime");
-    maxCreatedTime.datepicker({changeMonth: true, changeYear: true});
-    maxCreatedTime.datepicker("setDate", "7/11/2011");
 });
+
+function initDatePicker(datePicker, date, minData, maxDate) {
+    datePicker.datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'yy-mm-dd',
+        minDate: minData,
+        maxDate: maxDate
+    });
+    datePicker.datepicker("setDate", date);
+}
 
 function searchClicked() {
     var index = $("#tabsMenu").tabs('option', 'active');
@@ -46,8 +45,7 @@ function searchClicked() {
 
 }
 
-function searchClickedOnParametersTab()
-{
+function searchClickedOnParametersTab() {
     spatialMarkerManager.clearMarkersFromMapAndMemory();
     var jsonParameters = new JSONParametersConverter();
 
@@ -63,8 +61,117 @@ function searchClickedOnParametersTab()
     });
 }
 
-function searchClickedOnAreaTab()
-{
+function getInitData() {
+    var url = "http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/init";
+    $.getJSON(url, function (result) {
+        initAllControlWithData(result[0]);
+    });
+}
+
+function initAllControlWithData(initData) {
+    var minVotesNumSlider = $("#minVotesNumSlider");
+    var minVotesNumLabel = $("#minVotesNumLabel");
+
+    var maxVotesNumSlider = $("#maxVotesNumSlider");
+    var maxVotesNumLabel = $("#maxVotesNumLabel");
+
+    initSlider(minVotesNumSlider, minVotesNumLabel, 0, initData.votesAmount);
+    initSlider(maxVotesNumSlider, maxVotesNumLabel, initData.votesAmount, initData.votesAmount);
+
+    minVotesNumSlider.on("slidechange", function( event, ui ) {
+        var newValue = ui.value;
+        minVotesNumLabel.html(newValue);
+        if (newValue > getSliderValue(maxVotesNumSlider))
+        {
+            setSliderValue(maxVotesNumSlider, newValue);
+        }
+    });
+
+    maxVotesNumSlider.on("slidechange", function( event, ui ) {
+        var newValue = ui.value;
+        maxVotesNumLabel.html(newValue);
+        if (newValue < getSliderValue(minVotesNumSlider))
+        {
+            setSliderValue(minVotesNumSlider, newValue);
+        }
+    });
+
+
+    var minViewsNumSlider = $("#minViewsNumSlider");
+    var minViewsNumLabel = $("#minViewsNumLabel");
+
+    var maxViewsNumSlider = $("#maxViewsNumSlider");
+    var maxViewsNumLabel = $("#maxViewsNumLabel");
+
+    initSlider(minViewsNumSlider, minViewsNumLabel, 0, initData.viewsAmount);
+    initSlider(maxViewsNumSlider, maxViewsNumLabel, initData.viewsAmount, initData.viewsAmount);
+
+    minViewsNumSlider.on("slidechange", function( event, ui ) {
+        var newValue = ui.value;
+        minViewsNumLabel.html(newValue);
+        if (newValue > getSliderValue(maxViewsNumSlider))
+        {
+            setSliderValue(maxViewsNumSlider, newValue);
+        }
+    });
+
+    maxViewsNumSlider.on("slidechange", function( event, ui ) {
+        var newValue = ui.value;
+        maxViewsNumLabel.html(newValue);
+        if (newValue < getSliderValue(minViewsNumSlider))
+        {
+            setSliderValue(minViewsNumSlider, newValue);
+        }
+    });
+
+
+    var minCommentsNumSlider = $("#minCommentsNumSlider");
+    var minCommentsNumLabel = $("#minCommentsNumLabel");
+
+    var maxCommentsNumSlider = $("#maxCommentsNumSlider");
+    var maxCommentsNumLabel = $("#maxCommentsNumLabel");
+
+    initSlider(minCommentsNumSlider, minCommentsNumLabel, 0, initData.commentsAmount);
+    initSlider(maxCommentsNumSlider, maxCommentsNumLabel, initData.commentsAmount, initData.commentsAmount);
+
+    minCommentsNumSlider.on("slidechange", function( event, ui ) {
+        var newValue = ui.value;
+        minCommentsNumLabel.html(newValue);
+        if (newValue > getSliderValue(maxCommentsNumSlider))
+        {
+            setSliderValue(maxCommentsNumSlider, newValue);
+        }
+    });
+
+    maxCommentsNumSlider.on("slidechange", function( event, ui ) {
+        var newValue = ui.value;
+        maxCommentsNumLabel.html(newValue);
+        if (newValue < getSliderValue(minCommentsNumSlider))
+        {
+            setSliderValue(minCommentsNumSlider, newValue);
+        }
+    });
+
+    var minCreatedTime = $("#minCreatedTime");
+    initDatePicker(minCreatedTime, initData.minCreatedTime, initData.minCreatedTime, initData.maxCreatedTime);
+
+    var maxCreatedTime = $("#maxCreatedTime");
+    initDatePicker(maxCreatedTime, initData.maxCreatedTime, initData.minCreatedTime, initData.maxCreatedTime);
+    setInitDataForSelect($('#sourceSelect'), initData.sources);
+    setInitDataForSelect($('#tagSelect'), initData.tagTypes);
+    setInitDataForSelect($('#citySelect'), initData.cites);
+}
+
+function setInitDataForSelect(select, initData) {
+    $.each(initData, function (i, item) {
+        select.append($('<option>', {
+            value: i,
+            text: item
+        }));
+    });
+}
+
+function searchClickedOnAreaTab() {
     var jsonArea = new JSONAreaConverter();
     var json = jsonArea.getJSON();
     var url = "http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/issues/area?parameters=";
@@ -75,23 +182,19 @@ function searchClickedOnAreaTab()
 
 }
 
-function searchClickedOnSchoolsTab()
-{
+function searchClickedOnSchoolsTab() {
 
 }
 
 
-function initSlider(slider, label) {
+function initSlider(slider, label, value, max) {
     slider.slider({
-        value: 0,
+        value: value,
         min: 0,
-        max: 150,
-        step: 1,
-        slide: function (event, ui) {
-            label.html(ui.value);
-        }
+        max: max,
+        step: 1
     });
-    label.html(slider.slider("value"));
+    label.html(getSliderValue(slider));
 }
 
 function areaTabClicked() {
@@ -100,4 +203,14 @@ function areaTabClicked() {
 
 function nonAreaTabClicked() {
     spatialMarkerManager.hideDrawingManager();
+}
+
+function getSliderValue(slider)
+{
+    return slider.slider("value")
+}
+
+function setSliderValue(slider, value)
+{
+    slider.slider('value',value);
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 @Path("/issues")
 @Stateless
-public class UserRestService
+public class IssueRestService
 {
     @Inject
     private IssueRepository issueRepository;

@@ -19,8 +19,8 @@ function SpatialMarkerManager() {
         '</div>' +
         '<h1 id="firstHeading" class="firstHeading">Details</h1>' +
         '<div id="bodyContent">' +
-        '<p>tag - {0}</p>' +
-        '<p>{1}</p>' +
+        '<p><b>tag: </b> {0}</p>' +
+        '<p><b>description: </b> {1}</p>' +
         '<table class="table-bordered" >' +
         '<tr> ' +
         '<th>num votes</th>' +
@@ -33,7 +33,8 @@ function SpatialMarkerManager() {
         '<td>{4}</td> ' +
         '</tr> ' +
         '</table>' +
-        '<p><b>created time: </b> {5}</p>' +
+        '<p><b>source: </b> {5}</p>' +
+        '<p><b>created time: </b> {6}</p>' +
         '</div>' +
         '</div>';
 
@@ -96,10 +97,9 @@ function SpatialMarkerManager() {
 
     this.addMarkerWithInfo = function (issue) {
         var marker = this.addMarker(issue.latitude, issue.longitude);
-        marker.desc =  this.contentString.format(issue.tagType, issue.description, issue.votesAmount, issue.commentsAmount, issue.viewsAmount, issue.createdTime);
+        marker.desc =  this.contentString.format(issue.tagType, issue.description, issue.votesAmount, issue.commentsAmount, issue.viewsAmount,issue.source, issue.createdTime);
         this.oms.addMarker(marker);
-        //this.addInfoToMarker(marker, issue.tagType, issue.description, issue.votesAmount, issue.commentsAmount, issue.viewsAmount);
-    };
+     };
 
     this.addMarker = function (lat, lng) {
         var latLng = new google.maps.LatLng(lat, lng);
@@ -108,18 +108,6 @@ function SpatialMarkerManager() {
         });
         this.markers.push(marker);
         return marker;
-    };
-
-    this.addInfoToMarker = function (marker, tagType, description, numVotes, numComments, numViews) {
-        infoWindow = new google.maps.InfoWindow({
-            content: this.contentString.format(tagType, description, numVotes, numComments, numViews),
-            maxWidth: 200
-        });
-        var _this = this;
-        google.maps.event.addListener(marker, 'click', function () {
-            infoWindow.open(_this.map, marker);
-        });
-
     };
 
     this.initDrawingManager = function () {

@@ -1,5 +1,7 @@
 package com.webrob.spatial.domain;
 
+import com.webrob.spatial.util.DateAdapter;
+
 /**
  * Created by Robert on 2014-12-31.
  */
@@ -87,7 +89,7 @@ public class SearchIssueParameters
 
     public String getMinCreatedTime()
     {
-	return minCreatedTime;
+        return minCreatedTime;
     }
 
     public void setMinCreatedTime(String minCreatedTime)
@@ -97,7 +99,7 @@ public class SearchIssueParameters
 
     public String getMaxCreatedTime()
     {
-	return maxCreatedTime;
+	return maxCreatedTime + " 23:59:59";
     }
 
     public void setMaxCreatedTime(String maxCreatedTime)

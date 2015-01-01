@@ -10,31 +10,32 @@ import java.util.Date;
  */
 public class DateAdapter extends XmlAdapter<String, Date>
 {
-    // the desired format
-    private static String pattern = "dd-MM-yyyy ss:mm:HH";
+    private static String newPattern = "yyyy-MM-dd";
 
     public String marshal(Date date) throws Exception
     {
-	return new SimpleDateFormat(pattern).format(date);
+	return new SimpleDateFormat(newPattern).format(date);
     }
 
     public Date unmarshal(String dateString) throws Exception
     {
-	return new SimpleDateFormat(pattern).parse(dateString);
+	return new SimpleDateFormat(newPattern).parse(dateString);
     }
 
-    public static Date getDateFromString(String dateString)
+
+    public static String changeFormatDateString(String dateString)
     {
-	Date date = null;
+	String newFormatDateString = "";
 	try
 	{
-	    date = new SimpleDateFormat(pattern).parse(dateString);
+	    Date date = new SimpleDateFormat(newPattern).parse(dateString);
+	    newFormatDateString = new SimpleDateFormat(newPattern).format(date);
 	}
 	catch (ParseException e)
 	{
 	    e.printStackTrace();
 	}
-	return date;
+	return newFormatDateString;
     }
 
 }

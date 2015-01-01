@@ -14,7 +14,8 @@ import java.util.List;
 @Stateless
 public class AreaRepositoryImpl extends AreaRepository
 {
-    @Override protected List<AreaStatistics> queryIssues(SearchAreaStatistics searchAreaStatistics) throws SQLException
+    @Override
+    protected List<AreaStatistics> queryIssues(SearchAreaStatistics searchAreaStatistics) throws SQLException
     {
 	List<AreaStatistics> areaStatistics = new ArrayList<>();
 	areaStatistics.add(new AreaStatistics());

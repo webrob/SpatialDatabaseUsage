@@ -4,7 +4,6 @@ import com.webrob.spatial.domain.Issue;
 import com.webrob.spatial.domain.SearchIssueParameters;
 
 import javax.ejb.Stateless;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +16,8 @@ import java.util.List;
 @Stateless
 public class IssueRepositoryImpl extends IssueRepository
 {
-    String selectQuery = "SELECT i.id, X(i.xy) latitude, Y(i.xy) longitude, i.summary, i.description, i.num_votes,"
+    String selectQuery = "SELECT i.id, X(i.latLng) latitude, Y(i.latLng) longitude, i.summary, i.description, i.num_votes,"
 		    + "i.num_comments, i.num_views, i.source, i.created_time, i.tag_type FROM issue i WHERE i.city = ?";
-
 
     private String prepareSelectQuery(SearchIssueParameters parameters)
     {
@@ -50,7 +48,8 @@ public class IssueRepositoryImpl extends IssueRepository
 	}
 	if (parameters.isCreatedTimeSelected())
 	{
-
+	    query.append(" AND i.created_time >= ?");
+	    query.append(" AND i.created_time <= ?");
 	}
 
 	return query.toString();
@@ -59,15 +58,15 @@ public class IssueRepositoryImpl extends IssueRepository
     private void setPrepareStatementParameters(PreparedStatement preparedStatement, SearchIssueParameters parameters)
 		    throws SQLException
     {
-	int index = 0; // 1
-	preparedStatement.setInt(++index, 1); // city
+	int index = 0;
+	preparedStatement.setString(++index, parameters.getCity());
 	if (parameters.isSourceSelected())
 	{
-	    preparedStatement.setString(++index,parameters.getSource());
+	    preparedStatement.setString(++index, parameters.getSource());
 	}
 	if (parameters.isTagTypeSelected())
 	{
-	    preparedStatement.setString(++index,parameters.getTagType());
+	    preparedStatement.setString(++index, parameters.getTagType());
 	}
 	if (parameters.isVoteAmountSelected())
 	{
@@ -86,9 +85,9 @@ public class IssueRepositoryImpl extends IssueRepository
 	}
 	if (parameters.isCreatedTimeSelected())
 	{
-
+	    preparedStatement.setString(++index, parameters.getMinCreatedTime());
+	    preparedStatement.setString(++index, parameters.getMaxCreatedTime());
 	}
-
     }
 
     @Override
@@ -128,6 +127,9 @@ public class IssueRepositoryImpl extends IssueRepository
 
 		    String description = resultSet.getString("description");
 		    issue.setDescription(description);
+
+		    String source = resultSet.getString("source");
+		    issue.setSource(source);
 
 		    String createdTime = resultSet.getString("created_time");
 		    issue.setCreatedTime(createdTime);

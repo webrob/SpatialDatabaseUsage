@@ -29,7 +29,7 @@ public abstract class ConnectionManager<T>
     private void initConnection() throws ClassNotFoundException, SQLException
     {
 	Class.forName("com.mysql.jdbc.Driver");
-	connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/spdb", "root3", "root");
+	connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/spatial_database_usage", "root3", "root");
 
     }
 

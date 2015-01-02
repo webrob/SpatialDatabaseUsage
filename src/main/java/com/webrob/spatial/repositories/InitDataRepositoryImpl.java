@@ -15,9 +15,9 @@ import java.util.List;
 @Stateless
 public class InitDataRepositoryImpl extends InitDataRepository
 {
-    protected String sourcesQuery = "select i.source from issue i group by i.source";
-    protected String tagTypesQuery = "select i.tag_type from issue i group by i.tag_type";
-    protected String citiesQuery = "select i.city from issue i group by i.city";
+    protected String sourcesQuery = "select i.source from issue i group by i.source ORDER BY i.source";
+    protected String tagTypesQuery = "select i.tag_type from issue i group by i.tag_type ORDER BY  i.tag_type";
+    protected String citiesQuery = "select i.city from issue i group by i.city ORDER BY i.city";
     protected String maxValuesQuery = "select max(i.num_votes) max_votes ,max(num_comments) max_comments, max(i.num_views) max_views, max(i.created_time) max_created_time, min(i.created_time) min_created_time from issue i";
 
     @Override

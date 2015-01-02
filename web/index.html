@@ -8,8 +8,14 @@
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/app.css" rel="stylesheet" type="text/css">
     <link href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css"
+          href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/jqueryui/dataTables.jqueryui.css">
+
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="js/jquery/table-scroll.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>
@@ -18,6 +24,7 @@
     <script src="js/UIHelper.js"></script>
     <script src="js/JSONParametersConverter.js"></script>
     <script src="js/JSONAreaConverter.js"></script>
+    <script src="js/JSONSchoolConverter.js"></script>
     <script src="js/spatialDatabase.js"></script>
     <script src="js/spatialMarkerManager.js"></script>
     <script src="js/customGoogleMaps.js"></script>
@@ -35,9 +42,9 @@
 
     <div id="tabsMenu">
         <ul>
-            <li><a href="#tabs-1" onclick="nonAreaTabClicked()">parameters</a></li>
+            <li><a href="#tabs-1" onclick="parametersTabClicked()">parameters</a></li>
             <li><a href="#tabs-2" onclick="areaTabClicked()">area statistics</a></li>
-            <li><a href="#tabs-3" onclick="nonAreaTabClicked()">Tab 3</a></li>
+            <li><a href="#tabs-3" onclick="schoolTabClicked()">schools</a></li>
         </ul>
         <div id="tabs-1">
             <div>
@@ -74,11 +81,11 @@
             <div>
                 <span>
                 <label>
-                    <input class="short" type="text" name="sighting_date" id="minCreatedTime"/>
+                    <input class="short" type="text" id="minCreatedTime"/>
                 </label>
                 -
                 <label>
-                    <input class="short" type="text" name="sighting_date" id="maxCreatedTime"/>
+                    <input class="short" type="text" id="maxCreatedTime"/>
                 </label>
                 </span>
             </div>
@@ -147,21 +154,66 @@
                 <div class="second" id="maxViewsNumSlider"></div>
             </div>
 
-
+            <p>
+                <b>selected issues number: </b> <span id="markersNumber">0</span>
+            </p>
         </div>
         <div id="tabs-2">
-            <p>Content 2</p>
+            <h4> Select area to see results </h4>
+
+            <table class="table">
+                <TR>
+                    <TH rowspan="2"></TH>
+                    <TH rowspan="2">votes</TH>
+                <TR>
+                    <TH>comments</TH>
+                    <TH>views</TH>
+                </TR>
+                <TR id="max">
+                    <TH>max</TH>
+                    <TD>0</TD>
+                    <TD>0</TD>
+                    <TD>0</TD>
+                </TR>
+                <TR id="sum">
+                    <TH>sum</TH>
+                    <TD>0</TD>
+                    <TD>0</TD>
+                    <TD>0</TD>
+                </TR>
+                <TR id="avg">
+                    <TH>avg</TH>
+                    <TD>0</TD>
+                    <TD>0</TD>
+                    <TD>0</TD>
+                </TR>
+
+            </table>
+
+            <b>selected issues number: </b> <span id="pointsNumber">0</span>
         </div>
         <div id="tabs-3">
-            <p>Content 3</p>
+            <h4> Select area to see results </h4>
+
+            <div class="schoolTable">
+                <table id="schoolTable" class="table">
+                    <thead>
+                    <tr>
+                        <td>name</td>
+                        <td>lowest class</td>
+                        <td>classes amount</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+            </div>
         </div>
     </div>
 
     <span class="controls">
         <a id="searchData" onclick="searchClicked()" class="btn btn-large btn-primary">Search</a>
-    </span>
-    <span class="controls">
-        <a class="btn btn-large btn-primary">Clear</a>
     </span>
 
 </div>

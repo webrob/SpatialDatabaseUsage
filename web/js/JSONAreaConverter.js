@@ -2,8 +2,8 @@
  * Created by Robert on 2014-12-31.
  */
 function JSONAreaConverter() {
-    this.nortEastLatitude = null;
-    this.nortEastLongitude = null;
+    this.northEastLatitude = null;
+    this.northEastLongitude = null;
     this.southWestLatitude = null;
     this.southWestLongitude = null;
 
@@ -13,8 +13,8 @@ function JSONAreaConverter() {
             var ne = bounds.getNorthEast();
             var sw = bounds.getSouthWest();
 
-            this.nortEastLatitude = ne.lat();
-            this.nortEastLongitude = ne.lng();
+            this.northEastLatitude = ne.lat();
+            this.northEastLongitude = ne.lng();
 
             this.southWestLatitude = sw.lat();
             this.southWestLongitude = sw.lng();

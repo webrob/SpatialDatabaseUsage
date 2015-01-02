@@ -2,12 +2,15 @@
  * Created by Robert on 2014-12-28.
  */
 
-
-
+var schoolTable = null;
 $(document).ready(function () {
     getInitData();
 
     $("#tabsMenu").tabs();
+
+
+
+
 
 });
 
@@ -41,12 +44,34 @@ function searchClicked() {
             break;
         }
     }
-
-
 }
 
 function searchClickedOnParametersTab() {
     spatialMarkerManager.clearMarkersFromMapAndMemory();
+
+    switch ($("#citySelect")[0].selectedIndex) {
+        case 0:
+        {
+            spatialMarkerManager.setChicagoCenter();
+            break;
+        }
+        case 1:
+        {
+            spatialMarkerManager.setNewHavenCenter();
+            break;
+        }
+        case 2:
+        {
+            spatialMarkerManager.setOaklandCenter();
+            break;
+        }
+        case 3:
+        {
+            spatialMarkerManager.setRichmondCenter();
+            break;
+        }
+    }
+
     var jsonParameters = new JSONParametersConverter();
 
     var json = jsonParameters.getJSON();
@@ -58,6 +83,7 @@ function searchClickedOnParametersTab() {
             spatialMarkerManager.addMarkerWithInfo(field);
         });
         spatialMarkerManager.addMarkersToMap();
+        $('#markersNumber').html(spatialMarkerManager.getMarkersNumber());
     });
 }
 
@@ -78,20 +104,18 @@ function initAllControlWithData(initData) {
     initSlider(minVotesNumSlider, minVotesNumLabel, 0, initData.votesAmount);
     initSlider(maxVotesNumSlider, maxVotesNumLabel, initData.votesAmount, initData.votesAmount);
 
-    minVotesNumSlider.on("slidechange", function( event, ui ) {
+    minVotesNumSlider.on("slidechange", function (event, ui) {
         var newValue = ui.value;
         minVotesNumLabel.html(newValue);
-        if (newValue > getSliderValue(maxVotesNumSlider))
-        {
+        if (newValue > getSliderValue(maxVotesNumSlider)) {
             setSliderValue(maxVotesNumSlider, newValue);
         }
     });
 
-    maxVotesNumSlider.on("slidechange", function( event, ui ) {
+    maxVotesNumSlider.on("slidechange", function (event, ui) {
         var newValue = ui.value;
         maxVotesNumLabel.html(newValue);
-        if (newValue < getSliderValue(minVotesNumSlider))
-        {
+        if (newValue < getSliderValue(minVotesNumSlider)) {
             setSliderValue(minVotesNumSlider, newValue);
         }
     });
@@ -106,20 +130,18 @@ function initAllControlWithData(initData) {
     initSlider(minViewsNumSlider, minViewsNumLabel, 0, initData.viewsAmount);
     initSlider(maxViewsNumSlider, maxViewsNumLabel, initData.viewsAmount, initData.viewsAmount);
 
-    minViewsNumSlider.on("slidechange", function( event, ui ) {
+    minViewsNumSlider.on("slidechange", function (event, ui) {
         var newValue = ui.value;
         minViewsNumLabel.html(newValue);
-        if (newValue > getSliderValue(maxViewsNumSlider))
-        {
+        if (newValue > getSliderValue(maxViewsNumSlider)) {
             setSliderValue(maxViewsNumSlider, newValue);
         }
     });
 
-    maxViewsNumSlider.on("slidechange", function( event, ui ) {
+    maxViewsNumSlider.on("slidechange", function (event, ui) {
         var newValue = ui.value;
         maxViewsNumLabel.html(newValue);
-        if (newValue < getSliderValue(minViewsNumSlider))
-        {
+        if (newValue < getSliderValue(minViewsNumSlider)) {
             setSliderValue(minViewsNumSlider, newValue);
         }
     });
@@ -134,20 +156,18 @@ function initAllControlWithData(initData) {
     initSlider(minCommentsNumSlider, minCommentsNumLabel, 0, initData.commentsAmount);
     initSlider(maxCommentsNumSlider, maxCommentsNumLabel, initData.commentsAmount, initData.commentsAmount);
 
-    minCommentsNumSlider.on("slidechange", function( event, ui ) {
+    minCommentsNumSlider.on("slidechange", function (event, ui) {
         var newValue = ui.value;
         minCommentsNumLabel.html(newValue);
-        if (newValue > getSliderValue(maxCommentsNumSlider))
-        {
+        if (newValue > getSliderValue(maxCommentsNumSlider)) {
             setSliderValue(maxCommentsNumSlider, newValue);
         }
     });
 
-    maxCommentsNumSlider.on("slidechange", function( event, ui ) {
+    maxCommentsNumSlider.on("slidechange", function (event, ui) {
         var newValue = ui.value;
         maxCommentsNumLabel.html(newValue);
-        if (newValue < getSliderValue(minCommentsNumSlider))
-        {
+        if (newValue < getSliderValue(minCommentsNumSlider)) {
             setSliderValue(minCommentsNumSlider, newValue);
         }
     });
@@ -177,13 +197,68 @@ function searchClickedOnAreaTab() {
     var url = "http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/issues/area?parameters=";
     var encodedURL = url + encodeURIComponent(json);
     $.getJSON(encodedURL, function (result) {
-
+        changeAllTableData(result[0]);
     });
 
 }
 
+
 function searchClickedOnSchoolsTab() {
 
+    $('#schoolTable').find('> tbody').html("");
+    $('#schoolTable').find('> thead').html("");
+
+    var jsonSchool = new JSONSchoolConverter();
+    var json = jsonSchool.getJSON();
+    var url = "http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/issues/school?parameters=";
+    var encodedURL = url + encodeURIComponent(json);
+
+
+    $.getJSON(encodedURL, function (result) {
+        $.each(result, function (i, field) {
+            var body = $("#schoolTable").find('tbody');
+            addRowToTableBody(body, field)
+        });
+
+        var head = $('#schoolTable').find('thead');
+        var row = $('<tr>');
+        head.append(row);
+        row.append(($('<td>')).text("name"))
+            .append(($('<td>')).text("lowest class"))
+            .append(($('<td>')).text("classes amount"));
+
+    });
+}
+
+function addRowToTableBody(body, data) {
+    var row = $('<tr>');
+    body.append(row);
+    row.append(($('<td>')).text(data.name))
+        .append(($('<td>')).text(data.lowestClassType))
+        .append(($('<td>')).text(data.classesAmount));
+}
+
+function changeAllTableData(data) {
+    var maxHeader = $('#max');
+    setDataToTableCell(maxHeader, 0, data.maxVotesAmount);
+    setDataToTableCell(maxHeader, 1, data.maxCommentsAmount);
+    setDataToTableCell(maxHeader, 2, data.maxViewsAmount);
+
+    var sumHeader = $('#sum');
+    setDataToTableCell(sumHeader, 0, data.sumVotesAmount);
+    setDataToTableCell(sumHeader, 1, data.sumCommentsAmount);
+    setDataToTableCell(sumHeader, 2, data.sumViewsAmount);
+
+    var avgHeader = $('#avg');
+    setDataToTableCell(avgHeader, 0, data.avgVotesAmount);
+    setDataToTableCell(avgHeader, 1, data.avgCommentsAmount);
+    setDataToTableCell(avgHeader, 2, data.avgViewsAmount);
+
+    $('#pointsNumber').html(data.pointsAmount);
+}
+
+function setDataToTableCell(tableHeader, rowNumber, data) {
+    tableHeader.find('td').eq(rowNumber).html(data);
 }
 
 
@@ -198,19 +273,22 @@ function initSlider(slider, label, value, max) {
 }
 
 function areaTabClicked() {
-    spatialMarkerManager.showDrawingManger();
+    spatialMarkerManager.showAreaDrawingManger();
 }
 
-function nonAreaTabClicked() {
-    spatialMarkerManager.hideDrawingManager();
+function parametersTabClicked() {
+
+    spatialMarkerManager.disableDrawingMode();
 }
 
-function getSliderValue(slider)
-{
+function schoolTabClicked() {
+    spatialMarkerManager.showSchoolDrawingManager();
+}
+
+function getSliderValue(slider) {
     return slider.slider("value")
 }
 
-function setSliderValue(slider, value)
-{
-    slider.slider('value',value);
+function setSliderValue(slider, value) {
+    slider.slider('value', value);
 }

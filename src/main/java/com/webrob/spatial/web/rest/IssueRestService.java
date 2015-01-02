@@ -1,13 +1,12 @@
 package com.webrob.spatial.web.rest;
 
-import com.webrob.spatial.domain.AreaStatistics;
-import com.webrob.spatial.domain.Issue;
-import com.webrob.spatial.domain.SearchAreaStatistics;
-import com.webrob.spatial.domain.SearchIssueParameters;
+import com.webrob.spatial.domain.*;
 import com.webrob.spatial.repositories.AreaRepository;
+import com.webrob.spatial.repositories.SchoolRepository;
 import com.webrob.spatial.util.JSONAreaStatisticsWrapper;
 import com.webrob.spatial.util.JSONParametersWrapper;
 import com.webrob.spatial.repositories.IssueRepository;
+import com.webrob.spatial.util.JSONSchoolWrapper;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -29,6 +28,10 @@ public class IssueRestService
     @Inject
     private AreaRepository areaRepository;
 
+    @Inject
+    private SchoolRepository schoolRepository;
+
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Issue> getAllIssues(@QueryParam("parameters")JSONParametersWrapper jsonParametersWrapper) throws SQLException
@@ -43,12 +46,23 @@ public class IssueRestService
     @GET
     @Path("area")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<AreaStatistics> getAreaStatistics(@QueryParam("parameters")JSONAreaStatisticsWrapper jsonAreaStatisticsWrapper) throws SQLException
+    public List<AreaStatistics> getAreaStatistics(@QueryParam("parameters") JSONAreaStatisticsWrapper jsonAreaStatisticsWrapper) throws SQLException
     {
         SearchAreaStatistics searchAreaStatistics = jsonAreaStatisticsWrapper.getSearchAreaStatistics();
         List<AreaStatistics> areaStatistics = areaRepository.getAreaStatistics(searchAreaStatistics);
 
         return areaStatistics;
+    }
+
+    @GET
+    @Path("school")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<School> getSchools(@QueryParam("parameters") JSONSchoolWrapper jsonSchoolWrapper) throws SQLException
+    {
+        SearchSchoolParameters searchSchoolParameters = jsonSchoolWrapper.getSearchSchoolParameters();
+        List<School> schoolList = schoolRepository.getAreaStatistics(searchSchoolParameters);
+
+        return schoolList;
     }
 
 

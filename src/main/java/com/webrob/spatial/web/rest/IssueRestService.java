@@ -2,11 +2,11 @@ package com.webrob.spatial.web.rest;
 
 import com.webrob.spatial.domain.*;
 import com.webrob.spatial.repositories.AreaRepository;
+import com.webrob.spatial.repositories.IssueRepository;
 import com.webrob.spatial.repositories.SchoolRepository;
 import com.webrob.spatial.util.JSONAreaStatisticsWrapper;
-import com.webrob.spatial.util.JSONParametersWrapper;
-import com.webrob.spatial.repositories.IssueRepository;
-import com.webrob.spatial.util.JSONSchoolWrapper;
+import com.webrob.spatial.util.JSONPSearchIssuesWrapper;
+import com.webrob.spatial.util.JSONSearchSchoolWrapper;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -31,39 +31,29 @@ public class IssueRestService
     @Inject
     private SchoolRepository schoolRepository;
 
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Issue> getAllIssues(@QueryParam("parameters")JSONParametersWrapper jsonParametersWrapper) throws SQLException
+    public List<Issue> getAllIssues(@QueryParam("parameters")JSONPSearchIssuesWrapper JSONPSearchIssuesWrapper) throws SQLException
     {
-        SearchIssueParameters searchIssueParameters = jsonParametersWrapper.getIssueSearchParameters();
-
-        List<Issue> allIssues = issueRepository.getAllIssues(searchIssueParameters);
-        return allIssues;
+        SearchIssueParameters searchIssueParameters = JSONPSearchIssuesWrapper.getParameters();
+        return issueRepository.getAllIssues(searchIssueParameters);
     }
-
 
     @GET
     @Path("area")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AreaStatistics> getAreaStatistics(@QueryParam("parameters") JSONAreaStatisticsWrapper jsonAreaStatisticsWrapper) throws SQLException
     {
-        SearchAreaStatistics searchAreaStatistics = jsonAreaStatisticsWrapper.getSearchAreaStatistics();
-        List<AreaStatistics> areaStatistics = areaRepository.getAreaStatistics(searchAreaStatistics);
-
-        return areaStatistics;
+        SearchAreaStatistics searchAreaStatistics = jsonAreaStatisticsWrapper.getParameters();
+        return areaRepository.getAreaStatistics(searchAreaStatistics);
     }
 
     @GET
     @Path("school")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<School> getSchools(@QueryParam("parameters") JSONSchoolWrapper jsonSchoolWrapper) throws SQLException
+    public List<School> getSchools(@QueryParam("parameters") JSONSearchSchoolWrapper jsonSearchSchoolWrapper) throws SQLException
     {
-        SearchSchoolParameters searchSchoolParameters = jsonSchoolWrapper.getSearchSchoolParameters();
-        List<School> schoolList = schoolRepository.getAreaStatistics(searchSchoolParameters);
-
-        return schoolList;
+        SearchSchoolParameters searchSchoolParameters = jsonSearchSchoolWrapper.getParameters();
+        return schoolRepository.getAreaStatistics(searchSchoolParameters);
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.webrob.spatial.repositories;
 
-import javax.annotation.PostConstruct;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,7 +11,6 @@ import java.util.List;
 public abstract class ConnectionManager<T>
 {
     protected Connection connection;
-
 
     private void closeConnection()
     {

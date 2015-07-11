@@ -1,8 +1,6 @@
 package com.webrob.spatial.repositories;
 
-import com.webrob.spatial.domain.AreaStatistics;
 import com.webrob.spatial.domain.School;
-import com.webrob.spatial.domain.SearchAreaStatistics;
 import com.webrob.spatial.domain.SearchSchoolParameters;
 
 import java.sql.SQLException;

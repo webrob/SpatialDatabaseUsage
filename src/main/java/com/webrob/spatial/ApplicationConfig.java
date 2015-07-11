@@ -20,7 +20,7 @@ public class ApplicationConfig extends Application
 
     public ApplicationConfig()
     {
-	HashSet<Class<?>> c = new HashSet<>();
+	Set<Class<?>> c = new HashSet<>();
 	c.add(IssueRestService.class);
 	c.add(InitDataRestService.class);
 	c.add(JacksonJsonProvider.class);

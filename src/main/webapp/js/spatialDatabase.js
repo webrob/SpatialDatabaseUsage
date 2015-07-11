@@ -5,13 +5,7 @@
 var schoolTable = null;
 $(document).ready(function () {
     getInitData();
-
     $("#tabsMenu").tabs();
-
-
-
-
-
 });
 
 function initDatePicker(datePicker, date, minData, maxDate) {
@@ -75,7 +69,7 @@ function searchClickedOnParametersTab() {
     var jsonParameters = new JSONParametersConverter();
 
     var json = jsonParameters.getJSON();
-    var url = "http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/issues?parameters=";
+    var url = "SpatialDatabaseUsage/issues?parameters=";
     var encodedURL = url + encodeURIComponent(json);
     $.getJSON(encodedURL, function (result) {
         spatialMarkerManager.clearMarkersFromMapAndMemory();
@@ -88,7 +82,7 @@ function searchClickedOnParametersTab() {
 }
 
 function getInitData() {
-    var url = "http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/init";
+    var url = "SpatialDatabaseUsage/init";
     $.getJSON(url, function (result) {
         initAllControlWithData(result[0]);
     });
@@ -194,7 +188,7 @@ function setInitDataForSelect(select, initData) {
 function searchClickedOnAreaTab() {
     var jsonArea = new JSONAreaConverter();
     var json = jsonArea.getJSON();
-    var url = "http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/issues/area?parameters=";
+    var url = "SpatialDatabaseUsage/issues/area?parameters=";
     var encodedURL = url + encodeURIComponent(json);
     $.getJSON(encodedURL, function (result) {
         changeAllTableData(result[0]);
@@ -205,12 +199,13 @@ function searchClickedOnAreaTab() {
 
 function searchClickedOnSchoolsTab() {
 
-    $('#schoolTable').find('> tbody').html("");
-    $('#schoolTable').find('> thead').html("");
+    var schoolTable = $('#schoolTable');
+    schoolTable.find('> tbody').html("");
+    schoolTable.find('> thead').html("");
 
     var jsonSchool = new JSONSchoolConverter();
     var json = jsonSchool.getJSON();
-    var url = "http://localhost:9999/SpatialDatabaseUsage/SpatialDatabaseUsage/issues/school?parameters=";
+    var url = "SpatialDatabaseUsage/issues/school?parameters=";
     var encodedURL = url + encodeURIComponent(json);
 
 

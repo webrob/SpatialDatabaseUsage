@@ -18,7 +18,6 @@ import java.util.List;
 @Stateless
 public class InitDataRestService
 {
-
     @Inject
     private InitDataRepository initDataRepository;
 
@@ -26,8 +25,7 @@ public class InitDataRestService
     @Produces(MediaType.APPLICATION_JSON)
     public List<InitValues> getSourceValues()
     {
-        List<InitValues> valuesList = initDataRepository.getInitValues();
-        return valuesList;
+        return initDataRepository.getInitValues();
     }
 
 }

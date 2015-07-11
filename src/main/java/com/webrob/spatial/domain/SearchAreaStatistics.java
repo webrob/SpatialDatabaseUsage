@@ -1,6 +1,7 @@
 package com.webrob.spatial.domain;
 
 import javafx.geometry.Point2D;
+import lombok.Data;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
@@ -10,53 +11,12 @@ import java.util.List;
  * Created by Robert on 2014-12-31.
  */
 @XmlRootElement
-public class SearchAreaStatistics
+public @Data class SearchAreaStatistics
 {
-    public double getNorthEastLatitude()
-    {
-	return northEastLatitude;
-    }
-
-    public void setNorthEastLatitude(double northEastLatitude)
-    {
-	this.northEastLatitude = northEastLatitude;
-    }
-
-    public double getNorthEastLongitude()
-    {
-	return northEastLongitude;
-    }
-
-    public void setNorthEastLongitude(double northEastLongitude)
-    {
-	this.northEastLongitude = northEastLongitude;
-    }
-
-    public double getSouthWestLatitude()
-    {
-	return southWestLatitude;
-    }
-
-    public void setSouthWestLatitude(double southWestLatitude)
-    {
-	this.southWestLatitude = southWestLatitude;
-    }
-
-    public double getSouthWestLongitude()
-    {
-	return southWestLongitude;
-    }
-
-    public void setSouthWestLongitude(double southWestLongitude)
-    {
-	this.southWestLongitude = southWestLongitude;
-    }
-
     private double northEastLatitude;
     private double northEastLongitude;
     private double southWestLatitude;
     private double southWestLongitude;
-
 
     public List<Point2D> getAllPoints()
     {

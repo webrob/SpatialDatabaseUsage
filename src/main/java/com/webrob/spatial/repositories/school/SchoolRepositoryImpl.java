@@ -1,4 +1,4 @@
-package com.webrob.spatial.repositories;
+package com.webrob.spatial.repositories.school;
 
 import com.webrob.spatial.domain.School;
 import com.webrob.spatial.domain.SearchSchoolParameters;

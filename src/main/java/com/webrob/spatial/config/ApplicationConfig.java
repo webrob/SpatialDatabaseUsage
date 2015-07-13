@@ -1,7 +1,7 @@
-package com.webrob.spatial;
+package com.webrob.spatial.config;
 
-import com.webrob.spatial.web.rest.InitDataRestService;
-import com.webrob.spatial.web.rest.IssueRestService;
+import com.webrob.spatial.rest.InitDataRestService;
+import com.webrob.spatial.rest.IssueRestService;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 
 import javax.ws.rs.ApplicationPath;

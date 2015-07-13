@@ -1,6 +1,7 @@
-package com.webrob.spatial.repositories;
+package com.webrob.spatial.repositories.init;
 
 import com.webrob.spatial.domain.InitValues;
+import com.webrob.spatial.repositories.ConnectionManager;
 
 import java.sql.SQLException;
 import java.util.List;

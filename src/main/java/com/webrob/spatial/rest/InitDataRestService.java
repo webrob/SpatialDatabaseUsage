@@ -1,7 +1,7 @@
-package com.webrob.spatial.web.rest;
+package com.webrob.spatial.rest;
 
 import com.webrob.spatial.domain.InitValues;
-import com.webrob.spatial.repositories.InitDataRepository;
+import com.webrob.spatial.repositories.init.InitDataRepository;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

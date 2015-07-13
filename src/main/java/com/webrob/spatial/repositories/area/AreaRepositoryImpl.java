@@ -1,4 +1,4 @@
-package com.webrob.spatial.repositories;
+package com.webrob.spatial.repositories.area;
 
 import com.webrob.spatial.domain.AreaStatistics;
 import com.webrob.spatial.domain.SearchAreaStatistics;
@@ -26,7 +26,6 @@ public class AreaRepositoryImpl extends AreaRepository
     private String getPolygonPartQuery(SearchAreaStatistics searchAreaStatistics)
     {
 	StringBuilder polygon = new StringBuilder("Polygon((");
-
 	List<Point2D> allPoints = searchAreaStatistics.getAllPoints();
 
 	int index = 0;

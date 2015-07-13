@@ -1,7 +1,8 @@
-package com.webrob.spatial.repositories;
+package com.webrob.spatial.repositories.issue;
 
 import com.webrob.spatial.domain.Issue;
 import com.webrob.spatial.domain.SearchIssueParameters;
+import com.webrob.spatial.repositories.ConnectionManager;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,9 +1,9 @@
-package com.webrob.spatial.web.rest;
+package com.webrob.spatial.rest;
 
 import com.webrob.spatial.domain.*;
-import com.webrob.spatial.repositories.AreaRepository;
-import com.webrob.spatial.repositories.IssueRepository;
-import com.webrob.spatial.repositories.SchoolRepository;
+import com.webrob.spatial.repositories.area.AreaRepository;
+import com.webrob.spatial.repositories.issue.IssueRepository;
+import com.webrob.spatial.repositories.school.SchoolRepository;
 import com.webrob.spatial.util.JSONAreaStatisticsWrapper;
 import com.webrob.spatial.util.JSONPSearchIssuesWrapper;
 import com.webrob.spatial.util.JSONSearchSchoolWrapper;

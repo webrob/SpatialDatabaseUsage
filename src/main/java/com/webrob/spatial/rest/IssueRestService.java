@@ -1,9 +1,10 @@
 package com.webrob.spatial.rest;
 
 import com.webrob.spatial.domain.*;
-import com.webrob.spatial.repositories.area.AreaRepository;
-import com.webrob.spatial.repositories.issue.IssueRepository;
-import com.webrob.spatial.repositories.school.SchoolRepository;
+import com.webrob.spatial.repositories.Repository;
+import com.webrob.spatial.repositories.area.AreaAnnotation;
+import com.webrob.spatial.repositories.issue.IssueAnnotation;
+import com.webrob.spatial.repositories.school.SchoolAnnotation;
 import com.webrob.spatial.util.JSONAreaStatisticsWrapper;
 import com.webrob.spatial.util.JSONPSearchIssuesWrapper;
 import com.webrob.spatial.util.JSONSearchSchoolWrapper;
@@ -22,21 +23,21 @@ import java.util.List;
 @Stateless
 public class IssueRestService
 {
-    @Inject
-    private IssueRepository issueRepository;
+    @Inject @IssueAnnotation
+    private Repository<Issue, SearchIssueParameters> issueRepository;
 
-    @Inject
-    private AreaRepository areaRepository;
+    @Inject @AreaAnnotation
+    private Repository<AreaStatistics, SearchAreaStatistics> areaRepository;
 
-    @Inject
-    private SchoolRepository schoolRepository;
+    @Inject @SchoolAnnotation
+    private Repository<School, SearchSchoolParameters> schoolRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Issue> getAllIssues(@QueryParam("parameters")JSONPSearchIssuesWrapper JSONPSearchIssuesWrapper) throws SQLException
     {
         SearchIssueParameters searchIssueParameters = JSONPSearchIssuesWrapper.getParameters();
-        return issueRepository.getAllIssues(searchIssueParameters);
+        return issueRepository.getData(searchIssueParameters);
     }
 
     @GET
@@ -45,7 +46,7 @@ public class IssueRestService
     public List<AreaStatistics> getAreaStatistics(@QueryParam("parameters") JSONAreaStatisticsWrapper jsonAreaStatisticsWrapper) throws SQLException
     {
         SearchAreaStatistics searchAreaStatistics = jsonAreaStatisticsWrapper.getParameters();
-        return areaRepository.getAreaStatistics(searchAreaStatistics);
+        return areaRepository.getData(searchAreaStatistics);
     }
 
     @GET
@@ -54,6 +55,6 @@ public class IssueRestService
     public List<School> getSchools(@QueryParam("parameters") JSONSearchSchoolWrapper jsonSearchSchoolWrapper) throws SQLException
     {
         SearchSchoolParameters searchSchoolParameters = jsonSearchSchoolWrapper.getParameters();
-        return schoolRepository.getAreaStatistics(searchSchoolParameters);
+        return schoolRepository.getData(searchSchoolParameters);
     }
 }

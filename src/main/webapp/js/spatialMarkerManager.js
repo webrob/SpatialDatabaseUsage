@@ -1,8 +1,6 @@
 /**
  * Created by Robert on 2014-12-31.
  */
-
-
 function SpatialMarkerManager() {
     this.gm = google.maps;
     this.chicago = new google.maps.LatLng(41.850033, -87.6500523);

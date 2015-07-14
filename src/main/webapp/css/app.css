@@ -1,5 +1,3 @@
-/* app css stylesheet */
-
 html, body, #map-canvas {
     margin: 0;
     padding: 0;
@@ -9,21 +7,6 @@ html, body, #map-canvas {
 
 .short {
     width: 100px;
-}
-
-.wrapper {
-    width: 300px;
-    /*overflow: hidden;  will contain if #first is longer than #second */
-}
-
-.first {
-    width: 150px;
-    float: left; /* add this */
-
-}
-
-.second {
-    overflow: hidden; /* if you don't want #second to wrap below #first */
 }
 
 .gm-style img {
@@ -42,7 +25,7 @@ html, body, #map-canvas {
     margin: 10px;
     border: 3px solid #000;
     width: 400px;
-    height: 560px;
+    height: 490px;
 }
 
 .schoolTable {
@@ -65,5 +48,13 @@ html, body, #map-canvas {
 
 #tabsMenu {
     width: 380px;
-    height: 410px;
+    height: 370px;
+}
+
+.space {
+    margin-top: 5px;
+}
+
+.bigFont {
+    font-size: large;
 }

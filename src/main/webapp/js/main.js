@@ -1,85 +1,10 @@
 /**
  * Created by Robert on 2014-12-28.
  */
-
-var schoolTable = null;
 $(document).ready(function () {
     getInitData();
     $("#tabsMenu").tabs();
 });
-
-function initDatePicker(datePicker, date, minData, maxDate) {
-    datePicker.datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dateFormat: 'yy-mm-dd',
-        minDate: minData,
-        maxDate: maxDate
-    });
-    datePicker.datepicker("setDate", date);
-}
-
-function searchClicked() {
-    var index = $("#tabsMenu").tabs('option', 'active');
-    switch (index) {
-        case 0:
-        {
-            searchClickedOnParametersTab();
-            break;
-        }
-        case 1:
-        {
-            searchClickedOnAreaTab();
-            break;
-        }
-        case 2:
-        {
-            searchClickedOnSchoolsTab();
-            break;
-        }
-    }
-}
-
-function searchClickedOnParametersTab() {
-    spatialMarkerManager.clearMarkersFromMapAndMemory();
-
-    switch ($("#citySelect")[0].selectedIndex) {
-        case 0:
-        {
-            spatialMarkerManager.setChicagoCenter();
-            break;
-        }
-        case 1:
-        {
-            spatialMarkerManager.setNewHavenCenter();
-            break;
-        }
-        case 2:
-        {
-            spatialMarkerManager.setOaklandCenter();
-            break;
-        }
-        case 3:
-        {
-            spatialMarkerManager.setRichmondCenter();
-            break;
-        }
-    }
-
-    var jsonParameters = new JSONParametersConverter();
-
-    var json = jsonParameters.getJSON();
-    var url = "SpatialDatabaseUsage/issues?parameters=";
-    var encodedURL = url + encodeURIComponent(json);
-    $.getJSON(encodedURL, function (result) {
-        spatialMarkerManager.clearMarkersFromMapAndMemory();
-        $.each(result, function (i, field) {
-            spatialMarkerManager.addMarkerWithInfo(field);
-        });
-        spatialMarkerManager.addMarkersToMap();
-        $('#markersNumber').html(spatialMarkerManager.getMarkersNumber());
-    });
-}
 
 function getInitData() {
     var url = "SpatialDatabaseUsage/init";
@@ -175,6 +100,80 @@ function initAllControlWithData(initData) {
     setInitDataForSelect($('#tagSelect'), initData.tagTypes);
     setInitDataForSelect($('#citySelect'), initData.cites);
 }
+
+function initDatePicker(datePicker, date, minData, maxDate) {
+    datePicker.datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'yy-mm-dd',
+        minDate: minData,
+        maxDate: maxDate
+    });
+    datePicker.datepicker("setDate", date);
+}
+
+function searchClicked() {
+    var index = $("#tabsMenu").tabs('option', 'active');
+    switch (index) {
+        case 0:
+        {
+            searchClickedOnParametersTab();
+            break;
+        }
+        case 1:
+        {
+            searchClickedOnAreaTab();
+            break;
+        }
+        case 2:
+        {
+            searchClickedOnSchoolsTab();
+            break;
+        }
+    }
+}
+
+function searchClickedOnParametersTab() {
+    spatialMarkerManager.clearMarkersFromMapAndMemory();
+
+    switch ($("#citySelect")[0].selectedIndex) {
+        case 0:
+        {
+            spatialMarkerManager.setChicagoCenter();
+            break;
+        }
+        case 1:
+        {
+            spatialMarkerManager.setNewHavenCenter();
+            break;
+        }
+        case 2:
+        {
+            spatialMarkerManager.setOaklandCenter();
+            break;
+        }
+        case 3:
+        {
+            spatialMarkerManager.setRichmondCenter();
+            break;
+        }
+    }
+
+    var jsonParameters = new JSONParametersConverter();
+
+    var json = jsonParameters.getJSON();
+    var url = "SpatialDatabaseUsage/issues?parameters=";
+    var encodedURL = url + encodeURIComponent(json);
+    $.getJSON(encodedURL, function (result) {
+        spatialMarkerManager.clearMarkersFromMapAndMemory();
+        $.each(result, function (i, field) {
+            spatialMarkerManager.addMarkerWithInfo(field);
+        });
+        spatialMarkerManager.addMarkersToMap();
+        $('#markersNumber').html(spatialMarkerManager.getMarkersNumber());
+    });
+}
+
 
 function setInitDataForSelect(select, initData) {
     $.each(initData, function (i, item) {
@@ -272,7 +271,6 @@ function areaTabClicked() {
 }
 
 function parametersTabClicked() {
-
     spatialMarkerManager.disableDrawingMode();
 }
 

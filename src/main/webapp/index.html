@@ -4,8 +4,8 @@
     <title>Spatial Database Usage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <link href="css/bootstrap/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="css/app.css" rel="stylesheet" type="text/css">
     <link href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css"
@@ -13,19 +13,19 @@
 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-    <script src="js/jquery/table-scroll.min.js"></script>
+    <script src="lib/table-scroll.min.js"></script>
     <script type="text/javascript" language="javascript"
             src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>
-    <script src="js/oms.min.js"></script>
-    <script src="js/bootstrap/bootstrap.js"></script>
+    <script src="lib/oms.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/UIHelper.js"></script>
     <script src="js/JSONParametersConverter.js"></script>
     <script src="js/JSONAreaConverter.js"></script>
     <script src="js/JSONSchoolConverter.js"></script>
-    <script src="js/spatialDatabase.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/spatialMarkerManager.js"></script>
     <script src="js/customGoogleMaps.js"></script>
 </head>
@@ -33,14 +33,25 @@
 
 <div id="map-canvas"></div>
 
-<div id="legend"><h3>Control panel</h3>
+<div id="legend">
 
-    <div id="myDiv">
-        <label for="citySelect"></label><select id="citySelect">
+    <div class="row">
+        <div class="col-md-4 bigFont">
+            <label for="citySelect"></label><select id="citySelect">
         </select>
+        </div>
+
+        <div class="col-md-4 col-md-offset-4">
+            <span class="controls">
+        <a id="searchData" onclick="searchClicked()" class="btn btn-large btn-primary">Search</a>
+    </span>
+        </div>
     </div>
 
-    <div id="tabsMenu">
+
+
+
+    <div id="tabsMenu" class="space">
         <ul>
             <li><a href="#tabs-1" onclick="parametersTabClicked()">parameters</a></li>
             <li><a href="#tabs-2" onclick="areaTabClicked()">area statistics</a></li>
@@ -56,7 +67,7 @@
             </div>
             <div>
                 <label for="sourceSelect"></label><select id="sourceSelect">
-                </select>
+            </select>
             </div>
 
             <div>
@@ -67,16 +78,13 @@
             </div>
             <div>
                 <label for="tagSelect"></label><select name="tagSelect" id="tagSelect">
-                </select>
+            </select>
             </div>
-
-
             <div>
                 <label>
                     <input type="checkbox" id="createdTimeCheckbox">
                     Created time
                 </label>
-
             </div>
             <div>
                 <span>
@@ -97,66 +105,86 @@
                     Number of votes
                 </label>
             </div>
-            <div class="wrapper">
-
-                <div class="first" id="minVotesNumLabel">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="minVotesNumLabel"></div>
                 </div>
 
-                <div class="second" id="maxVotesNumLabel">
+                <div class="col-md-6">
+                    <div id="maxVotesNumLabel"></div>
                 </div>
             </div>
-            <div class="wrapper">
 
-                <div class="first" id="minVotesNumSlider"></div>
-                <div class="second" id="maxVotesNumSlider"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="minVotesNumSlider"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="maxVotesNumSlider"></div>
+                </div>
             </div>
 
-            <div>
+
+            <div class="space">
                 <label>
                     <input type="checkbox" id="commentsNumCheckbox">
                     Number of comments
                 </label>
-
             </div>
-            <div class="wrapper">
 
-                <div class="first" id="minCommentsNumLabel">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="minCommentsNumLabel"></div>
                 </div>
 
-                <div class="second" id="maxCommentsNumLabel">
+                <div class="col-md-6">
+                    <div id="maxCommentsNumLabel"></div>
                 </div>
             </div>
-            <div class="wrapper">
 
-                <div class="first" id="minCommentsNumSlider"></div>
-                <div class="second" id="maxCommentsNumSlider"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="minCommentsNumSlider"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="maxCommentsNumSlider"></div>
+                </div>
             </div>
 
 
-            <div>
+            <div class="space">
                 <label>
                     <input type="checkbox" id="viewsNumCheckbox">
                     Number of views
                 </label>
-
             </div>
-            <div class="wrapper">
 
-                <div class="first" id="minViewsNumLabel">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="minViewsNumLabel"></div>
                 </div>
 
-                <div class="second" id="maxViewsNumLabel">
+                <div class="col-md-6">
+                    <div id="maxViewsNumLabel"></div>
                 </div>
             </div>
-            <div class="wrapper">
 
-                <div class="first" id="minViewsNumSlider"></div>
-                <div class="second" id="maxViewsNumSlider"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="minViewsNumSlider"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="maxViewsNumSlider"></div>
+                </div>
             </div>
 
-            <p>
+
+            <div class="space">
                 <b>selected issues number: </b> <span id="markersNumber">0</span>
-            </p>
+            </div>
+
         </div>
         <div id="tabs-2">
             <h4> Select area to see results </h4>
@@ -190,7 +218,9 @@
 
             </table>
 
-            <b>selected issues number: </b> <span id="pointsNumber">0</span>
+            <div class="space">
+                <b>selected issues number: </b> <span id="pointsNumber">0</span>
+            </div>
         </div>
         <div id="tabs-3">
             <h4> Select area to see results </h4>
@@ -211,10 +241,6 @@
             </div>
         </div>
     </div>
-
-    <span class="controls">
-        <a id="searchData" onclick="searchClicked()" class="btn btn-large btn-primary">Search</a>
-    </span>
 
 </div>
 
